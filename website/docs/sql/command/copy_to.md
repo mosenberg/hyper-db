@@ -1,6 +1,6 @@
 # COPY TO
 
-— copy data from a table to a file
+— copy data from a SQL query to a file
 
 ## Synopsis
 
