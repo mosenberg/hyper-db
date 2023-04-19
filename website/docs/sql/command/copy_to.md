@@ -103,7 +103,7 @@ Same but with explicit Amazon S3 credentials and bucket region:
 Files named in a `COPY` command are read directly by the server, not by
 the client application. Therefore, they must reside on or be accessible
 to the database server machine, not the client. They must be accessible
-to and readable by the Hyper user (the user ID the server runs as), not
+to and writable by the Hyper user (the user ID the server runs as), not
 the client.
 
 `COPY` input and output is affected by [date_style](#date_style).
