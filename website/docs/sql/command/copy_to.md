@@ -61,7 +61,7 @@ on the available locations can be found in [External Locations](/docs/sql/extern
 `format_specific_option => value`
 
 :   A format-specific option. The available options for each respective
-    format can be found in [External formats](/docs/sql/external/formats).
+    format can be found in [External Formats](/docs/sql/external/formats).
 
 ## Examples {#sql-copy-examples}
 
