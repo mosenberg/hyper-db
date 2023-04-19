@@ -100,7 +100,7 @@ Same but with explicit Amazon S3 credentials and bucket region:
 
 ## Notes
 
-Files named in a `COPY` command are read directly by the server, not by
+Files named in a `COPY` command are written directly by the server, not by
 the client application. Therefore, they must reside on or be accessible
 to the database server machine, not the client. They must be accessible
 to and writable by the Hyper user (the user ID the server runs as), not
