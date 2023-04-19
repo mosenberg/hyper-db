@@ -52,7 +52,7 @@ on the available locations can be found in [External Locations](/docs/sql/extern
 
 `FORMAT => format_name`
 
-:   Selects the data format to be read. This option can be omitted in
+:   Selects the data format to be written. This option can be omitted in
     case the format can be inferred from the file extension. In case of
     a list of targets, all of them need to share this extension.
     Supported formats are depicted in detail in
