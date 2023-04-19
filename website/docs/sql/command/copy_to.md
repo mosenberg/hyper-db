@@ -20,7 +20,7 @@ FORMAT => <format_name>
 ## Description
 
 `COPY TO` copies the content of a Hyper database table to one or
-more files, overriding existing files if there is any.
+more files, overriding existing files if there are any.
 
 If a column list is specified, only those specified columns will
 be written, in the order they appear in the column list.
