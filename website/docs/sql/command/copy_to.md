@@ -43,8 +43,7 @@ on the available locations can be found in [External Locations](/docs/sql/extern
 
 `<query>`
 
-:   A [SELECT](select) command in any of its forms (`SELECT`, `TABLE`,
-    or `VALUES`).
+:   A [SELECT](select) command, [VALUES](values) command or any other SQL query.
 
 `<target_location>`
 
