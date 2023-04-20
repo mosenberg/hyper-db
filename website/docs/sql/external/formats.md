@@ -15,10 +15,14 @@ specified, Hyper will try to infer the format from the file extension.
 If multiple files are read, all have to possess the same extension for
 the inferral to succeed.
 
-The following formats are supported: [Text](#external-format-text),
-[CSV](#external-format-csv), [Apache Parquet](#external-format-parquet)
-and [Apache Iceberg](#external-format-iceberg). Further details can be
-found in the corresponding section.
+The following formats are supported:
+
+Format |`format` Option Value |Recognized File Extensions |Schema Inference? |Description
+----|----|----|----|----
+[Text](#external-format-text) |`'text'` |`.txt`, `.txt.gz` |No |Text format; as in PostgreSQL. Optionally, gzip compressed.
+[CSV](#external-format-csv) |`'csv'` |`.csv`, `.csv.gz` |No |Comma Separated Value format; as in PostgreSQL. Optionally, gzip compressed.
+[Apache Parquet](#external-format-parquet) |`'parquet'` |`.parquet` |Yes |The [Apache Parquet format](https://parquet.apache.org/); both version 1 and 2 supported
+[Apache Iceberg](#external-format-iceberg) |`'iceberg'` |Specified path must point to table directory |Yes |The [Apache Iceberg format](https://iceberg.apache.org/); version 1 and 2 are supported; version 3 is not supported
 
 ## Format Options
 
@@ -95,11 +99,9 @@ The following options are available for all or multiple external formats:
 ## Text Format {#external-format-text}
 
 When the `FORMAT => 'text'` option or a file extension of `.txt` is
-used, the data is read or written as a text file (as in PostgreSQL) with
-one line per table row. Optionally, gzip compressed text files can also
-be read, with the extension `.txt.gz`.
-
-A schema inference is not possible with text files.
+used, the data is read or written as a text file with one line per table
+row. Optionally, gzip compressed text files can also be read, with the
+extension `.txt.gz`.
 
 Columns in a row are separated by the delimiter character.
 The column values are string representations of the
@@ -175,14 +177,11 @@ format supports the following options:
 ## CSV Format {#external-format-csv}
 
 The `FORMAT => 'csv'` format option or a file extension of `.csv` is
-used for reading and writing the Comma Separated Value (CSV, as in
-PostgreSQL) file format used by many other programs, such as
-spreadsheets. Instead of the escaping rules used by Hyper's standard
-text format, it produces and recognizes the common CSV escaping
-mechanism. Optionally, gzip compressed CSV files can also be read, with
-the extension `.csv.gz`.
-
-A schema inference is not possible with CSV files.
+used for reading and writing the Comma Separated Value (CSV) file format
+used by many other programs, such as spreadsheets. Instead of the
+escaping rules used by Hyper's standard text format, it produces and
+recognizes the common CSV escaping mechanism. Optionally, gzip
+compressed CSV files can also be read, with the extension `.csv.gz`.
 
 The values in each record are separated by the `DELIMITER` character. If
 the value contains the delimiter character, the `QUOTE` character, the
