@@ -53,10 +53,9 @@ on the available locations can be found in [External Locations](/docs/sql/extern
 `FORMAT => format_name`
 
 :   Selects the data format to be written. This option can be omitted in
-    case the format can be inferred from the file extension. In case of
-    a list of targets, all of them need to share this extension.
-    Supported formats are depicted in detail in
-    [External formats](/docs/sql/external/formats).
+    case the format can be inferred from the file extension. Supported
+    formats are depicted in detail in
+    [External Formats](/docs/sql/external/formats).
 
 `format_specific_option => value`
 
@@ -93,6 +92,17 @@ Same but with explicit Amazon S3 credentials and bucket region:
     COPY products
     TO s3_location(
         's3://mybucket/mydirectory/products.parquet',
+        access_key_id => 'ACCESSKEYID12EXAMPLE',
+        secret_access_key => 'sWfssWSmnME5X/36dsf3G/cbyDzErEXAMPLE123',
+        region => 'us-east-1'
+    )
+
+Instead of copying the table `products` as a whole, use a query instead
+to do whatever operation is needed:
+
+    COPY (SELECT name FROM products ORDER BY price LIMIT 100)
+    TO s3_location(
+        's3://mybucket/mydirectory/cheap_products.parquet',
         access_key_id => 'ACCESSKEYID12EXAMPLE',
         secret_access_key => 'sWfssWSmnME5X/36dsf3G/cbyDzErEXAMPLE123',
         region => 'us-east-1'

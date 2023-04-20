@@ -12,17 +12,13 @@ information (or is taken from the target table in a
 The format of an external source or target is set through the
 `FORMAT` option. If the `FORMAT` option is not
 specified, Hyper will try to infer the format from the file extension.
-If multiple files are read or written, all have to possess the same
-extension for the inferral to succeed.
+If multiple files are read, all have to possess the same extension for
+the inferral to succeed.
 
-The following formats are supported:
-
-Format |`format` Option Value |Recognized File Extensions |Schema Inference? |Description
-----|----|----|----|----
-[Text](#external-format-text) |`'text'` |`.txt`, `.txt.gz` |No |Text format; as in PostgreSQL. Optionally, gzip compressed (currently not supported by [COPY TO](/docs/sql/command/copy_to)).
-[CSV](#external-format-csv) |`'csv'` |`.csv`, `.csv.gz` |No |Comma Separated Value format; as in PostgreSQL. Optionally, gzip compressed (currently not supported by [COPY TO](/docs/sql/command/copy_to)).
-[Apache Parquet](#external-format-parquet) |`'parquet'` |`.parquet` |Yes |The [Apache Parquet format](https://parquet.apache.org/); both version 1 and 2 supported
-[Apache Iceberg](#external-format-iceberg) |`'iceberg'` |Specified path must point to table directory |Yes |The [Apache Iceberg format](https://iceberg.apache.org/); version 1 and 2 are supported; version 3 is not supported
+The following formats are supported: [Text](#external-format-text),
+[CSV](#external-format-csv), [Apache Parquet](#external-format-parquet)
+and [Apache Iceberg](#external-format-iceberg). Further details can be
+found in the corresponding section.
 
 ## Format Options
 
@@ -98,9 +94,15 @@ The following options are available for all or multiple external formats:
 
 ## Text Format {#external-format-text}
 
-When the `FORMAT => 'text'` option is used, the data is read or written as a text
-file with one line per table row. Columns in a row are separated by the
-delimiter character. The column values are string representations of the
+When the `FORMAT => 'text'` option or a file extension of `.txt` is
+used, the data is read or written as a text file (as in PostgreSQL) with
+one line per table row. Optionally, gzip compressed text files can also
+be read, with the extension `.txt.gz`.
+
+A schema inference is not possible with text files.
+
+Columns in a row are separated by the delimiter character.
+The column values are string representations of the
 values, as if the values were casted to the `text` type. The specified
 null string represents a SQL null value. An error will be raised if any
 line of the input file contains more or fewer columns than expected.
@@ -172,11 +174,15 @@ format supports the following options:
 
 ## CSV Format {#external-format-csv}
 
-The `FORMAT => 'csv'` format option is used for reading the Comma
-Separated Value (CSV) file format used by many other programs, such as
+The `FORMAT => 'csv'` format option or a file extension of `.csv` is
+used for reading and writing the Comma Separated Value (CSV, as in
+PostgreSQL) file format used by many other programs, such as
 spreadsheets. Instead of the escaping rules used by Hyper's standard
 text format, it produces and recognizes the common CSV escaping
-mechanism.
+mechanism. Optionally, gzip compressed CSV files can also be read, with
+the extension `.csv.gz`.
+
+A schema inference is not possible with CSV files.
 
 The values in each record are separated by the `DELIMITER` character. If
 the value contains the delimiter character, the `QUOTE` character, the
@@ -254,7 +260,7 @@ following options:
 ## Apache Parquet Format {#external-format-parquet}
 
 The `FORMAT => 'parquet'` option or a file extension of `.parquet`
-enables reading the [Apache Parquet
+enables reading and writing the [Apache Parquet
 format](https://parquet.apache.org/), which is a binary columnar format.
 Thus, data stored in Parquet will usually be smaller than in text
 format. As data is stored in columnar format, Hyper does not need to
@@ -321,8 +327,9 @@ following options are available when writing to Parquet files:
 
 ## Apache Iceberg Format {#external-format-iceberg}
 
-The `FORMAT => 'iceberg'` option enables reading the [Apache Iceberg
-format](https://iceberg.apache.org/), which is a binary format designed
+The `FORMAT => 'iceberg'` option enables reading (currently not possible
+to write) the [Apache Iceberg format](https://iceberg.apache.org/),
+which is a binary format designed
 for huge data analytics tables. Apache Iceberg provides metadata
 information like versioning, partitioning and statistics on top of
 storage formats like parquet. Hyper can use the metadata information to
